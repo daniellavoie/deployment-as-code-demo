@@ -1,0 +1,33 @@
+project: ax360-frontend-dev
+
+services:
+- name: gcs-for-backend
+  param:
+    bucketName: my-bucket
+  type: gcs
+- name: firebase-for-backend
+  type: firebase
+
+apps:
+- name: firebase-microservice
+  image: firebase-microservice:1.0.2
+  subdomains:
+  - firebase-microservice
+  services:
+  - name: gcs-for-backend
+    env:
+      bucket: MY_BUCKET_ENV_VAR
+  - name: firebase-for-backend
+    env:
+      url: MY_FIREBASE_URL_ENV_VAR
+
+- name: gcs-microservice
+  image: gcs-microservice:1.1.0-LATEST
+  env:
+    BACKEND_URL: https://firebase-microservice.dev.mydomain.com
+  subdomains:
+  - gcs-microservice
+  services:
+  - name: gcs-for-backend
+    env:
+      bucket: MY_BUCKET_ENV_VAR
