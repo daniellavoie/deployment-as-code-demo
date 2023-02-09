@@ -4,6 +4,9 @@ services:
 - name: gcs-for-backend
   param:
     bucketName: my-bucket
+- name: additional-gcs-for-backend
+  param:
+    bucketName: my-second-bucket
   type: gcs
 - name: firebase-for-backend
   type: firebase
@@ -31,3 +34,6 @@ apps:
   - name: gcs-for-backend
     env:
       bucket: MY_BUCKET_ENV_VAR
+  - name:additional-gcs-for-backend
+    env:
+      bucket: MY_SECOND_BUCKET_ENV_VAR
